@@ -3,18 +3,24 @@ package kr.co.oasis.product.entity.domain;
 import jakarta.persistence.*;
 import kr.co.oasis.product.entity.BaseEntity;
 import kr.co.oasis.product.entity.enums.LoginType;
-import kr.co.oasis.product.entity.enums.UserRole;
-import kr.co.oasis.product.entity.enums.UserStatus;
+import kr.co.oasis.product.entity.enums.MemberRole;
+import kr.co.oasis.product.entity.enums.MemberStatus;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
-@Table(name = "USER", uniqueConstraints = {@UniqueConstraint(columnNames = {"email"}, name = "EMAIL_UNIQUE")})
-public class User extends BaseEntity {
+@Builder
+@Table(name = "MEMBER", uniqueConstraints = {@UniqueConstraint(columnNames = {"email"}, name = "EMAIL_UNIQUE")})
+@NoArgsConstructor
+@AllArgsConstructor
+public class Member extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
+    @Column(name = "member_id")
     private Long id;
 
     @Enumerated(EnumType.STRING)
@@ -34,10 +40,15 @@ public class User extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
-    private UserRole role;
+    private MemberRole role;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
-    private UserStatus userStatus;
+    private MemberStatus memberStatus;
+
+    public Member(String email) {
+        this.email = email;
+    }
+
 
 }
