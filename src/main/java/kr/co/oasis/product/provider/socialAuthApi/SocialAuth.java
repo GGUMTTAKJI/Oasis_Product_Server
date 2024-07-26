@@ -1,12 +1,10 @@
 package kr.co.oasis.product.provider.socialAuthApi;
 
-import kr.co.oasis.product.provider.socialAuthApi.dto.AccessTokenDto;
-
-import java.util.HashMap;
+import kr.co.oasis.product.provider.socialAuthApi.dto.KakaoAccessTokenDto;
 
 public interface SocialAuth {
 
     String getEmail(String accessToken);
 
-    AccessTokenDto getTokens(String code);
+    KakaoAccessTokenDto getTokens(String code);
 }

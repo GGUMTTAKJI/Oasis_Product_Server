@@ -1,15 +1,13 @@
 package kr.co.oasis.product.provider.socialAuthApi.impl;
 
 import kr.co.oasis.product.provider.socialAuthApi.SocialAuth;
-import kr.co.oasis.product.provider.socialAuthApi.dto.AccessTokenDto;
+import kr.co.oasis.product.provider.socialAuthApi.dto.KakaoAccessTokenDto;
 import kr.co.oasis.product.provider.socialAuthApi.dto.KakaoAccount;
 import kr.co.oasis.product.provider.socialAuthApi.dto.KakaoResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
-
-import java.util.HashMap;
 
 @RequiredArgsConstructor
 public class KakaoSocialAuth implements SocialAuth {
@@ -37,8 +35,8 @@ public class KakaoSocialAuth implements SocialAuth {
     }
 
     @Override
-    public AccessTokenDto getTokens(String code) {
-        Mono<AccessTokenDto> accessTokenDtoMono = webClient
+    public KakaoAccessTokenDto getTokens(String code) {
+        Mono<KakaoAccessTokenDto> accessTokenDtoMono = webClient
                 .post()
                 .uri(uriBuilder -> uriBuilder.scheme("https")
                         .host("kauth.kakao.com")
@@ -48,7 +46,7 @@ public class KakaoSocialAuth implements SocialAuth {
                         .queryParam("code", code)
                         .build())
                 .retrieve()
-                .bodyToMono(AccessTokenDto.class);
+                .bodyToMono(KakaoAccessTokenDto.class);
 
         return accessTokenDtoMono.block();
     }

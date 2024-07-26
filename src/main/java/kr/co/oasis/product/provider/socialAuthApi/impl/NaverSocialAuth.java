@@ -1,9 +1,7 @@
 package kr.co.oasis.product.provider.socialAuthApi.impl;
 
 import kr.co.oasis.product.provider.socialAuthApi.SocialAuth;
-import kr.co.oasis.product.provider.socialAuthApi.dto.AccessTokenDto;
-
-import java.util.HashMap;
+import kr.co.oasis.product.provider.socialAuthApi.dto.KakaoAccessTokenDto;
 
 public class NaverSocialAuth implements SocialAuth {
     @Override
@@ -12,7 +10,7 @@ public class NaverSocialAuth implements SocialAuth {
     }
 
     @Override
-    public AccessTokenDto getTokens(String code) {
+    public KakaoAccessTokenDto getTokens(String code) {
 
         return null;
     }

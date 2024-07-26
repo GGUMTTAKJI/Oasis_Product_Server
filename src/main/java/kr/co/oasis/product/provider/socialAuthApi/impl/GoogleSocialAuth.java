@@ -1,7 +1,7 @@
 package kr.co.oasis.product.provider.socialAuthApi.impl;
 
 import kr.co.oasis.product.provider.socialAuthApi.SocialAuth;
-import kr.co.oasis.product.provider.socialAuthApi.dto.AccessTokenDto;
+import kr.co.oasis.product.provider.socialAuthApi.dto.KakaoAccessTokenDto;
 
 public class GoogleSocialAuth implements SocialAuth {
 
@@ -11,7 +11,7 @@ public class GoogleSocialAuth implements SocialAuth {
     }
 
     @Override
-    public AccessTokenDto getTokens(String code) {
+    public KakaoAccessTokenDto getTokens(String code) {
         return null;
     }
 
