@@ -2,9 +2,9 @@ package kr.co.oasis.product.provider.socialAuthApi;
 
 import kr.co.oasis.product.provider.socialAuthApi.dto.KakaoAccessTokenDto;
 
-public interface SocialAuth {
+public interface SocialAuth <T>{
 
     String getEmail(String accessToken);
 
-    KakaoAccessTokenDto getTokens(String code);
+    T getTokens(String code);
 }
