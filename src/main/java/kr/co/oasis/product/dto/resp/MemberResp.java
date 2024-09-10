@@ -6,4 +6,6 @@ public record MemberResp() {
 
     public record login(String status, String message, TokenDto token) {}
 
+    public record join(String status, String message) {}
+
 }

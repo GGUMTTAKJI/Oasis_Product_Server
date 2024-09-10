@@ -20,10 +20,17 @@ public class AuthController {
     private final TokenProvider tokenProvider;
 
     @GetMapping("/login")
-    public MemberResp.login login(@RequestParam String code) {
+    public ResponseEntity<MemberResp.login> login(@RequestParam String code) {
         log.info("code:{}", code);
         TokenDto token = authService.login(code);
-        return new MemberResp.login("success", "loginOk", token);
+        return ResponseEntity.ok(new MemberResp.login("success", "loginOk", token));
+    }
+
+    @GetMapping("/join")
+    public ResponseEntity<MemberResp.login> join(@RequestParam String name, @RequestParam String phone, @RequestParam String email) {
+        log.info("name:{}, phone:{}, email:{}", name, phone, email);
+        TokenDto token = authService.join(name, phone, email);
+        return ResponseEntity.ok(new MemberResp.login("success", "joinOk", token));
     }
 
 

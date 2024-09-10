@@ -4,8 +4,6 @@ import kr.co.oasis.product.provider.socialAuthApi.SocialAuth;
 import kr.co.oasis.product.provider.socialAuthApi.impl.GoogleSocialAuth;
 import kr.co.oasis.product.provider.socialAuthApi.impl.KakaoSocialAuth;
 import kr.co.oasis.product.provider.socialAuthApi.impl.NaverSocialAuth;
-import kr.co.oasis.product.service.MemberService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.client.WebClient;

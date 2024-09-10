@@ -1,6 +1,10 @@
 package kr.co.oasis.product.service;
 
 import kr.co.oasis.product.entity.domain.Member;
+import kr.co.oasis.product.entity.enums.LoginType;
+import kr.co.oasis.product.entity.enums.MemberRole;
+import kr.co.oasis.product.entity.enums.MemberStatus;
+import kr.co.oasis.product.exception.member.AlreadyMemberException;
 import kr.co.oasis.product.exception.member.NotMemberException;
 import kr.co.oasis.product.provider.socialAuthApi.SocialAuth;
 import kr.co.oasis.product.provider.socialAuthApi.dto.KakaoAccessTokenDto;
@@ -78,6 +82,46 @@ public class AuthService {
         log.info("토큰 : {}", token.getAccessToken());
 
         return token;
+    }
+
+    public TokenDto join(String name, String phone, String email) {
+        //이메일로 이미 존재하는 회원인지 체크
+        Optional<Member> result = memberRepository.findByEmail(email);
+        if (result.isPresent()) {
+            throw new AlreadyMemberException();
+        }
+
+        //DB에 회원정보 저장
+        Member member = Member.builder()
+                .loginType(LoginType.KAKAO)
+                .name(name)
+                .email(email)
+                .phone(phone)
+                .role(MemberRole.MEMBER)
+                .memberStatus(MemberStatus.ACTIVE)
+                .build();
+        memberRepository.save(member);
+        log.info("회원가입 정보 저장 성공");
+
+        //로그인용 JWT토큰 발급
+        String redisKey = email + ":token";
+
+        TokenDto token = tokenProvider.createToken(email, member.getRole().toString());
+
+        Map<String, Object> tokenMap = new HashMap<>();
+        String formattedDateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy:MM:dd:HH:mm:ss"));
+        tokenMap.put(ACCESS_TOKEN_KEY, token.getAccessToken());
+        tokenMap.put(REFRESH_TOKEN_KEY, token.getRefreshToken());
+        tokenMap.put(GENERATE_TIME, formattedDateTime);
+
+        Duration refreshTtl = Duration.ofDays(7); // 리프레시 토큰의 Redis 저장 기간을 일주일로 설정
+        redisRepository.setHashValues(redisKey, tokenMap); //Redis에 리프레쉬 토큰 저장
+
+        log.info("로그인 성공, 토큰 신규 발급");
+        log.info("토큰 : {}", token.getAccessToken());
+
+        return token;
+
     }
 
 }
