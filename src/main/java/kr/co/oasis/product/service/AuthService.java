@@ -22,7 +22,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -51,7 +50,7 @@ public class AuthService {
         Optional<Member> result = memberRepository.findByEmail(email);
 
         if (result.isEmpty()) { // 디비에 데이터가 없으면 회원이 아님으로 예외처리
-            throw new NotMemberException();
+            throw new NotMemberException(email);
         }
 
         String redisKey = email + ":token";

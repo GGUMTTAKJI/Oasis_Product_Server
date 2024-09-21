@@ -20,13 +20,12 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler({NotMemberException.class})
     protected ResponseEntity<BasicErrorResult> handleNotMemberException(NotMemberException e) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new BasicErrorResult("fail", e.getMessage(), e.getEmail()));
+        return ResponseEntity.ok().body(new BasicErrorResult("not_member", e.getMessage(), e.getEmail()));
     }
 
     @ExceptionHandler({AlreadyMemberException.class})
     protected ResponseEntity<BasicErrorResult> handleAlreadyMemberException(NotMemberException e) {
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(new BasicErrorResult("fail", e.getMessage(), e.getEmail()));
-        //https://deveric.tistory.com/62 에러코드 선정 이유
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(new BasicErrorResult("already_member", e.getMessage(), e.getEmail()));
     }
 
 
